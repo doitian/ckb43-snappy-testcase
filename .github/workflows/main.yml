@@ -1,0 +1,18 @@
+name: ckb 0.43.0 snappy
+on: [push]
+jobs:
+  ckb-migrate-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: curl -LO https://github.com/nervosnetwork/ckb/releases/download/v0.43.0/ckb_v0.43.0_x86_64-apple-darwin.zip
+      - run: unzip ckb_v0.43.0_x86_64-apple-darwin.zip
+      - run: ckb_v0.43.0_x86_64-apple-darwin/ckb migrate --force
+
+  ckb-migrate-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: curl -LO https://github.com/nervosnetwork/ckb/releases/download/v0.43.0/ckb_v0.43.0_x86_64-pc-windows-msvc.zip
+      - run: Expand-Archive -Path ckb_v0.43.0_x86_64-pc-windows-msvc.zip -DestinationPath ${{ github.workspace }}
+      - run: ckb_v0.43.0_x86_64-pc-windows-msvc\ckb.exe migrate --force
